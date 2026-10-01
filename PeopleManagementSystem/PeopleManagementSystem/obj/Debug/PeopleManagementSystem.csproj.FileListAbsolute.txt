@@ -1,0 +1,7 @@
+C:\Users\Admin\Documents\GitHub\Learning People Management System\PeopleManagementSystem\PeopleManagementSystem\bin\Debug\PeopleManagementSystem.exe.config
+C:\Users\Admin\Documents\GitHub\Learning People Management System\PeopleManagementSystem\PeopleManagementSystem\bin\Debug\PeopleManagementSystem.exe
+C:\Users\Admin\Documents\GitHub\Learning People Management System\PeopleManagementSystem\PeopleManagementSystem\bin\Debug\PeopleManagementSystem.pdb
+C:\Users\Admin\Documents\GitHub\Learning People Management System\PeopleManagementSystem\PeopleManagementSystem\obj\Debug\PeopleManagementSystem.csproj.AssemblyReference.cache
+C:\Users\Admin\Documents\GitHub\Learning People Management System\PeopleManagementSystem\PeopleManagementSystem\obj\Debug\PeopleManagementSystem.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\GitHub\Learning People Management System\PeopleManagementSystem\PeopleManagementSystem\obj\Debug\PeopleManagementSystem.exe
+C:\Users\Admin\Documents\GitHub\Learning People Management System\PeopleManagementSystem\PeopleManagementSystem\obj\Debug\PeopleManagementSystem.pdb
