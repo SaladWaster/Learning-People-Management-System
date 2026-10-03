@@ -20,6 +20,8 @@ namespace PeopleManagementSystem
 
 
 
+            // Definition of a person
+            // Can be adjusted in the future as necessary
             public Person(string name, int age)
             {
                 // this refers to the class field "name" in the current instance of a class ( public string name )
@@ -60,8 +62,15 @@ namespace PeopleManagementSystem
 
             // Manger Constructor
             public Manager()
-            {
-                people = new List<Person>();    // initialising list
+            {   
+                // initialising list
+                people = new List<Person>()
+                {
+                    new Person("Aba", 23),
+                    new Person("Austin", 16)
+                };
+
+
                 printMenu();
             }
 
@@ -89,6 +98,8 @@ namespace PeopleManagementSystem
                     else if (menuOption == 4) { searchUsers(); }
                     else if (menuOption == 5) { removeUsers(); }
                     else if (menuOption == 6) { exit(); }
+
+                    printMenu();
                 }
                 else
                 {
@@ -102,27 +113,84 @@ namespace PeopleManagementSystem
 
             public void printUsers()
             {
-                Console.WriteLine("Print");
+                //Console.WriteLine("Print");
+
+                startOption("Printing");
+
+                for (int i = 1; i < people.Count + 1; i++) 
+                {
+                    Console.WriteLine(i + ". " + people[i-1].returnDetails());  // return details for each person in list
+                };
+
+                finishOption();
+
+                //int i = 1;
+
+                //// people is a list of Persons
+                //people.ForEach(delegate (Person person)
+                //{                    
+                //    Console.WriteLine(i + ". " + person.returnDetails());  // return details for each person in list
+                //    i++;
+                //});
+
+
             }
+
             public void addUsers()
             {
+                //Console.Clear();
+
+                //Console.WriteLine("Adding users: \n");
+
+                startOption("Adding");
+
                 Console.WriteLine("Add");
+                finishOption();
             }
             public void editUsers()
             {
+                startOption("Editing");
+
                 Console.WriteLine("Edit");
+                finishOption();
             }
             public void searchUsers()
             {
+                startOption("Searching");
+
                 Console.WriteLine("Search");
+                finishOption();
             }
             public void removeUsers()
             {
+                startOption("Removing");
+
                 Console.WriteLine("Remove");
+                finishOption();
             }
             public void exit()
             {
-                Console.WriteLine("Exit");
+                Console.Clear();
+
+                Console.WriteLine("Press <Enter> again to exit the app.");
+            }
+
+
+
+            public void finishOption()
+            {
+                Console.WriteLine();
+                Console.WriteLine("Press <Enter> again to return to Menu.");
+
+                Console.ReadLine();
+                Console.Clear();
+            }
+
+            public void startOption(string message)
+            {
+                Console.Clear();
+
+                Console.WriteLine($"{message} users: \n");
             }
 
 
