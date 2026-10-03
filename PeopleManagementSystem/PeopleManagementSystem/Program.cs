@@ -66,8 +66,8 @@ namespace PeopleManagementSystem
                 // initialising list
                 people = new List<Person>()
                 {
-                    new Person("Aba", 23),
-                    new Person("Austin", 16)
+                    //new Person("Aba", 23),
+                    //new Person("Austin", 16)
                 };
 
 
@@ -86,9 +86,9 @@ namespace PeopleManagementSystem
 
                 Console.Write("Enter an option: ");
 
-                bool tryParse = int.TryParse(Console.ReadLine(), out int menuOption);   // Parsing the User Input as a Menu option
+                bool tryParseMenu = int.TryParse(Console.ReadLine(), out int menuOption);   // Parsing the User Input as a Menu option
 
-                if(tryParse && menuOption > 0 && menuOption < 7)
+                if(tryParseMenu && menuOption > 0 && menuOption < 7)
                 {
                     //Console.WriteLine(menuOption);
 
@@ -103,9 +103,8 @@ namespace PeopleManagementSystem
                 }
                 else
                 {
-                    Console.WriteLine("Invalid option; Press <Enter> to try again.");
-                    Console.ReadLine();
-                    Console.Clear();
+                    //Console.WriteLine("Invalid option; Press <Enter> to try again.");
+                    errorMessage("Invalid option!");
                     printMenu();
                 }
 
@@ -117,10 +116,18 @@ namespace PeopleManagementSystem
 
                 startOption("Printing");
 
-                for (int i = 1; i < people.Count + 1; i++) 
+                if (people.Count == 0)
                 {
-                    Console.WriteLine(i + ". " + people[i-1].returnDetails());  // return details for each person in list
-                };
+                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
+                }
+                else
+                {
+                    for (int i = 1; i < people.Count + 1; i++)
+                    {
+                        Console.WriteLine(i + ". " + people[i - 1].returnDetails());  // return details for each person in list
+                    }
+                }
+                
 
                 finishOption();
 
@@ -137,21 +144,66 @@ namespace PeopleManagementSystem
             }
 
             public void addUsers()
-            {
-                //Console.Clear();
-
-                //Console.WriteLine("Adding users: \n");
-
+            {                
                 startOption("Adding");
 
-                Console.WriteLine("Add");
-                finishOption();
+
+                // Enter name
+
+                Console.Write("Enter a name: ");
+                string nameInput = Console.ReadLine();
+
+                // Enter age
+                Console.Write("Enter age: ");
+                //int ageInput = Convert.ToInt32( Console.ReadLine() );
+
+                bool tryParseAdd = int.TryParse(Console.ReadLine(), out int ageInput);   // Parsing the Age Input
+
+
+                if (!string.IsNullOrEmpty(nameInput))
+                {
+                    if (tryParseAdd && ageInput > 0 && ageInput < 150)
+                    {
+                        // Create person class
+
+                        Person person = new Person(nameInput, ageInput);
+
+                        // add to List
+                        people.Add(person);
+
+                        Console.WriteLine("Successfully added a person!");
+
+                        finishOption();
+                    }
+                    else
+                    {
+                        errorMessage("Invalid age input! Please enter a valid age and range.");
+                        addUsers();
+                    }
+                }
+                else
+                {
+                    errorMessage("Invalid name input!");
+                    addUsers();
+                }
+
+
+
+
             }
             public void editUsers()
             {
                 startOption("Editing");
 
                 Console.WriteLine("Edit");
+
+                // Check if person in system
+                // Print all people
+                // allow selection
+                // validate selection
+                // edit user, print message
+
+
                 finishOption();
             }
             public void searchUsers()
@@ -193,7 +245,14 @@ namespace PeopleManagementSystem
                 Console.WriteLine($"{message} users: \n");
             }
 
+            public void errorMessage(string message)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"{message} Press <Enter> to try again.");
 
+                Console.ReadLine();
+                Console.Clear();
+            }
         }
 
 
