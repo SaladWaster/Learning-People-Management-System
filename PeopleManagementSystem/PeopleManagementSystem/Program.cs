@@ -62,7 +62,7 @@ namespace PeopleManagementSystem
 
             // Manger Constructor
             public Manager()
-            {   
+            {
                 // initialising list
                 people = new List<Person>()
                 {
@@ -88,7 +88,7 @@ namespace PeopleManagementSystem
 
                 bool tryParseMenu = int.TryParse(Console.ReadLine(), out int menuOption);   // Parsing the User Input as a Menu option
 
-                if(tryParseMenu && menuOption > 0 && menuOption < 7)
+                if (tryParseMenu && menuOption > 0 && menuOption < 7)
                 {
                     //Console.WriteLine(menuOption);
 
@@ -116,18 +116,8 @@ namespace PeopleManagementSystem
 
                 startOption("Printing");
 
-                if (people.Count == 0)
-                {
-                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
-                }
-                else
-                {
-                    for (int i = 1; i < people.Count + 1; i++)
-                    {
-                        Console.WriteLine(i + ". " + people[i - 1].returnDetails());  // return details for each person in list
-                    }
-                }
-                
+                printAllUsers();
+
 
                 finishOption();
 
@@ -144,7 +134,7 @@ namespace PeopleManagementSystem
             }
 
             public void addUsers()
-            {                
+            {
                 startOption("Adding");
 
 
@@ -195,13 +185,44 @@ namespace PeopleManagementSystem
             {
                 startOption("Editing");
 
-                Console.WriteLine("Edit");
+                //Console.WriteLine("Edit");
 
-                // Check if person in system
-                // Print all people
-                // allow selection
-                // validate selection
-                // edit user, print message
+
+                if (people.Count == 0)
+                {
+                    Console.WriteLine("There are currently no users in the system to edit. Create a user with option 1.");
+                    
+                }
+                else
+                {
+                    // Check if person in system AND Print all people
+                    printAllUsers();
+
+
+                    // allow selection
+                    Console.Write("Enter an Index: ");
+
+                    // validate selection                
+                    bool tryParseEdit = int.TryParse(Console.ReadLine(), out int indexSelect);   // Parsing the Index Selection input
+
+                    indexSelect--;  // To match the actual list index
+
+                    if (tryParseEdit && indexSelect >= 0 && indexSelect < people.Count())
+                    {
+
+                        // edit user, print message
+                        //people();
+
+                        Console.WriteLine("Successfully edited a person!");
+
+                    }
+                    else
+                    {
+                        errorMessage("Invalid Index! Please enter a valid Index to edit.");
+                        editUsers();
+                    }
+
+                }
 
 
                 finishOption();
@@ -253,6 +274,63 @@ namespace PeopleManagementSystem
                 Console.ReadLine();
                 Console.Clear();
             }
+
+
+            public void printAllUsers()
+            {
+                if (people.Count == 0)
+                {
+                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
+                    //finishOption();
+                }
+                else
+                {
+                    for (int i = 1; i < people.Count + 1; i++)
+                    {
+                        Console.WriteLine(i + ". " + people[i - 1].returnDetails());  // return details for each person in list
+                    }
+                }
+            }
+
+            // we want to return a Person, not void
+            public Person returnPerson()
+            {
+                // Enter name
+
+                Console.Write("Enter a name: ");
+                string nameInput = Console.ReadLine();
+
+                // Enter age
+                Console.Write("Enter age: ");
+                //int ageInput = Convert.ToInt32( Console.ReadLine() );
+
+                bool tryParseAge = int.TryParse(Console.ReadLine(), out int ageInput);   // Parsing the Age Input
+
+
+                if (!string.IsNullOrEmpty(nameInput))
+                {
+                    if (tryParseAge && ageInput > 0 && ageInput < 150)
+                    {
+                        // Create new person
+
+                        return new Person(nameInput, ageInput); // returns new person
+
+                    }
+                    else
+                    {
+                        errorMessage("Invalid age input! Please enter a valid age and range.");
+                    }
+                }
+                else
+                {
+                    errorMessage("Invalid name input!");
+                }
+
+                return null;
+
+            }
+
+
         }
 
 
