@@ -119,16 +119,7 @@ namespace PeopleManagementSystem
                 printAllUsers();
 
 
-                finishOption();
-
-                //int i = 1;
-
-                //// people is a list of Persons
-                //people.ForEach(delegate (Person person)
-                //{                    
-                //    Console.WriteLine(i + ". " + person.returnDetails());  // return details for each person in list
-                //    i++;
-                //});
+                finishOption();                
 
 
             }
@@ -140,43 +131,32 @@ namespace PeopleManagementSystem
 
                 // Enter name
 
-                Console.Write("Enter a name: ");
-                string nameInput = Console.ReadLine();
+                //Console.Write("Enter a name: ");
+                //string nameInput = Console.ReadLine();
 
-                // Enter age
-                Console.Write("Enter age: ");
+                //// Enter age
+                //Console.Write("Enter age: ");
                 //int ageInput = Convert.ToInt32( Console.ReadLine() );
 
-                bool tryParseAdd = int.TryParse(Console.ReadLine(), out int ageInput);   // Parsing the Age Input
+                //bool tryParseAdd = int.TryParse(Console.ReadLine(), out int ageInput);   // Parsing the Age Input
 
 
-                if (!string.IsNullOrEmpty(nameInput))
+
+                Person person = returnPerson(); // This will return either a successful person object or null
+
+                if (person != null) 
                 {
-                    if (tryParseAdd && ageInput > 0 && ageInput < 150)
-                    {
-                        // Create person class
+                    // add to List
+                    people.Add(person);
 
-                        Person person = new Person(nameInput, ageInput);
+                    Console.WriteLine("Successfully added a person!");
 
-                        // add to List
-                        people.Add(person);
-
-                        Console.WriteLine("Successfully added a person!");
-
-                        finishOption();
-                    }
-                    else
-                    {
-                        errorMessage("Invalid age input! Please enter a valid age and range.");
-                        addUsers();
-                    }
+                    finishOption();
                 }
                 else
                 {
-                    errorMessage("Invalid name input!");
-                    addUsers();
+                    addUsers(); // Repeat this function when the user inputs an invalid entry/person
                 }
-
 
 
 
@@ -191,7 +171,8 @@ namespace PeopleManagementSystem
                 if (people.Count == 0)
                 {
                     Console.WriteLine("There are currently no users in the system to edit. Create a user with option 1.");
-                    
+                    finishOption();
+
                 }
                 else
                 {
@@ -207,13 +188,29 @@ namespace PeopleManagementSystem
 
                     indexSelect--;  // To match the actual list index
 
+
                     if (tryParseEdit && indexSelect >= 0 && indexSelect < people.Count())
                     {
 
                         // edit user, print message
-                        //people();
+                        Person person = returnPerson(); // This will return either a successful person object or null
 
-                        Console.WriteLine("Successfully edited a person!");
+                        if (person != null)
+                        {
+                            // edit list
+
+                            // instead of adding, we replace it directly at the corresponding index
+                            people[indexSelect] = person;
+
+
+                            Console.WriteLine("Successfully edited a person!");
+
+                            finishOption();
+                        }
+                        else
+                        {
+                            editUsers(); // Repeat this function when the user inputs an invalid entry/person
+                        }
 
                     }
                     else
@@ -222,10 +219,11 @@ namespace PeopleManagementSystem
                         editUsers();
                     }
 
+
+
                 }
 
 
-                finishOption();
             }
             public void searchUsers()
             {
@@ -302,18 +300,17 @@ namespace PeopleManagementSystem
 
                 // Enter age
                 Console.Write("Enter age: ");
-                //int ageInput = Convert.ToInt32( Console.ReadLine() );
 
                 bool tryParseAge = int.TryParse(Console.ReadLine(), out int ageInput);   // Parsing the Age Input
 
 
+                // Validating Name input
                 if (!string.IsNullOrEmpty(nameInput))
                 {
-                    if (tryParseAge && ageInput > 0 && ageInput < 150)
+                    if (tryParseAge && ageInput > 0 && ageInput < 150)  // Validating age Range
                     {
-                        // Create new person
 
-                        return new Person(nameInput, ageInput); // returns new person
+                        return new Person(nameInput, ageInput); // returns new person if successful
 
                     }
                     else
@@ -326,7 +323,7 @@ namespace PeopleManagementSystem
                     errorMessage("Invalid name input!");
                 }
 
-                return null;
+                return null;    // returns Null in case of error, as error lines do not return anything
 
             }
 
