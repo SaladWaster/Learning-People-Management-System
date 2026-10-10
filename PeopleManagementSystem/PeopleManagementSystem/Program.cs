@@ -56,7 +56,7 @@ namespace PeopleManagementSystem
 
         class Manager
         {
-            // Manager will be in charge of a list of people
+            // (User) Manager will contain a list of people
             public List<Person> people;
 
 
@@ -97,9 +97,14 @@ namespace PeopleManagementSystem
                     else if (menuOption == 3) { editUsers(); }
                     else if (menuOption == 4) { searchUsers(); }
                     else if (menuOption == 5) { removeUsers(); }
-                    else if (menuOption == 6) { exit(); }
 
-                    printMenu();
+
+                    //else if (menuOption == 6) { exit(); }
+
+                    if (menuOption >=1 && menuOption <= 5) 
+                    {
+                        printMenu();
+                    }
                 }
                 else
                 {
@@ -116,7 +121,10 @@ namespace PeopleManagementSystem
 
                 startOption("Printing");
 
-                printAllUsers();
+                if (!isSystemEmpty()) 
+                {
+                    printAllUsers();
+                }
 
 
                 finishOption();                
@@ -127,19 +135,6 @@ namespace PeopleManagementSystem
             public void addUsers()
             {
                 startOption("Adding");
-
-
-                // Enter name
-
-                //Console.Write("Enter a name: ");
-                //string nameInput = Console.ReadLine();
-
-                //// Enter age
-                //Console.Write("Enter age: ");
-                //int ageInput = Convert.ToInt32( Console.ReadLine() );
-
-                //bool tryParseAdd = int.TryParse(Console.ReadLine(), out int ageInput);   // Parsing the Age Input
-
 
 
                 Person person = returnPerson(); // This will return either a successful person object or null
@@ -168,13 +163,15 @@ namespace PeopleManagementSystem
                 //Console.WriteLine("Edit");
 
 
-                if (people.Count == 0)
-                {
-                    Console.WriteLine("There are currently no users in the system to edit. Create a user with option 1.");
-                    finishOption();
+                //if (people.Count == 0)
+                //{
+                //    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
+                //    finishOption();
 
-                }
-                else
+                //}
+                //else
+
+                if (!isSystemEmpty())
                 {
                     // Check if person in system AND Print all people
                     printAllUsers();
@@ -189,7 +186,7 @@ namespace PeopleManagementSystem
                     indexSelect--;  // To match the actual list index
 
 
-                    if (tryParseEdit && indexSelect >= 0 && indexSelect < people.Count())
+                    if (tryParseEdit && indexSelect >= 0 && indexSelect < people.Count)
                     {
 
                         // edit user, print message
@@ -222,6 +219,11 @@ namespace PeopleManagementSystem
 
 
                 }
+                else
+                {
+                    Console.ReadLine();
+                    Console.Clear();
+                }
 
 
             }
@@ -229,21 +231,121 @@ namespace PeopleManagementSystem
             {
                 startOption("Searching");
 
-                Console.WriteLine("Search");
+                // Check for people in system             
+                if (people.Count == 0)
+                {
+                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
+                    finishOption();
+
+                }
+                else
+                {
+
+                    bool searchFound = false;
+
+
+                    //while (!searchFound)
+                    //{
+                    Console.Write("Enter a name: ");
+                    string nameInput = (Console.ReadLine()).ToLower();
+
+
+                    // Validating Name input
+                    if (!string.IsNullOrEmpty(nameInput))
+                    {
+
+                        for (int i = 0; i < people.Count; i++)
+                        {
+                            //if (people[i].name.ToLower() == nameInput.ToLower())
+                            if (people[i].name.ToLower().Contains(nameInput))
+                            {
+                                Console.WriteLine(people[i].returnDetails());
+                                searchFound = true;
+                            }
+                        }
+
+                        if (!searchFound)
+                        {
+                            errorMessage("No search result found.");
+                            searchUsers();
+                        }
+
+
+
+                        finishOption();
+                    }
+                    else
+                    {
+                        errorMessage("Invalid name input!");
+                        searchUsers();
+                    }
+                    //}
+
+                    
+
+                }
+
+
+                // Get Name input
+                // Validate Name input
+                // Maybe allow age Search as well ***
+                // Loop and check for name
+                // Output results
+
+
+                // Return back to menu (AFTER search ends)
+                // * Maybe enter Null if done searching? Or just press a Key (Y/N/F)
+
+
+                //Console.WriteLine("Search");
+
                 finishOption();
             }
             public void removeUsers()
             {
                 startOption("Removing");
 
-                Console.WriteLine("Remove");
-                finishOption();
-            }
-            public void exit()
-            {
-                Console.Clear();
+                // Check for people in system
 
-                Console.WriteLine("Press <Enter> again to exit the app.");
+                // Check for people in system             
+                if (people.Count == 0)
+                {
+                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
+                    finishOption();
+
+                }
+                else
+                {
+
+                    // Output list of users
+                    printAllUsers();
+
+                    // allow selection
+                    Console.Write("Enter an Index: ");
+
+                    // validate selection                
+                    bool tryParseRemove = int.TryParse(Console.ReadLine(), out int indexSelect);   // Parsing the Index Selection input
+
+                    indexSelect--;  // To match the actual list index
+
+
+                    if (tryParseRemove && indexSelect >= 0 && indexSelect < people.Count)
+                    {
+
+                        // remove user, print message
+                        people.RemoveAt(indexSelect);
+                        Console.WriteLine("Successfully removed a person!");
+
+                        finishOption();
+
+                    }
+                    else
+                    {
+                        errorMessage("Invalid Index! Please enter a valid Index to edit.");
+                        removeUsers();
+                    }
+
+                }
             }
 
 
@@ -276,18 +378,26 @@ namespace PeopleManagementSystem
 
             public void printAllUsers()
             {
-                if (people.Count == 0)
+
+                for (int i = 1; i < people.Count + 1; i++)
                 {
-                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
-                    //finishOption();
+                    Console.WriteLine(i + ". " + people[i - 1].returnDetails());  // return details for each person in list
                 }
-                else
-                {
-                    for (int i = 1; i < people.Count + 1; i++)
-                    {
-                        Console.WriteLine(i + ". " + people[i - 1].returnDetails());  // return details for each person in list
-                    }
-                }
+
+                /* Removed people. Count validation as this will be implemented directly in function.
+                 * We only run the other processes if the people count isnt 0 */
+
+                //if (people.Count == 0)
+                //{
+                //    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
+                //}
+                //else
+                //{
+                //    for (int i = 1; i < people.Count + 1; i++)
+                //    {
+                //        Console.WriteLine(i + ". " + people[i - 1].returnDetails());  // return details for each person in list
+                //    }
+                //}
             }
 
             // we want to return a Person, not void
@@ -327,6 +437,20 @@ namespace PeopleManagementSystem
 
             }
 
+            public bool isSystemEmpty()
+            {
+                if (people.Count == 0)
+                {
+                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
+                    return true;
+                }
+                else
+                {
+
+                    return false;
+                }
+            }
+
 
         }
 
@@ -343,6 +467,7 @@ namespace PeopleManagementSystem
 
             Manager manager = new Manager();    // A new instance of manager will automatically call printMenu(), as stated in the constructor
 
+            Console.WriteLine("Press <Enter> Again to close the app. \n Goodbye! ");
 
             Console.ReadLine();
         }
