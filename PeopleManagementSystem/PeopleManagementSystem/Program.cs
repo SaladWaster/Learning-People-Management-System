@@ -66,8 +66,8 @@ namespace PeopleManagementSystem
                 // initialising list
                 people = new List<Person>()
                 {
-                    //new Person("Aba", 23),
-                    //new Person("Austin", 16)
+                    new Person("Aba", 23),
+                    new Person("Austin", 16)
                 };
 
 
@@ -160,16 +160,6 @@ namespace PeopleManagementSystem
             {
                 startOption("Editing");
 
-                //Console.WriteLine("Edit");
-
-
-                //if (people.Count == 0)
-                //{
-                //    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
-                //    finishOption();
-
-                //}
-                //else
 
                 if (!isSystemEmpty())
                 {
@@ -221,8 +211,8 @@ namespace PeopleManagementSystem
                 }
                 else
                 {
-                    Console.ReadLine();
-                    Console.Clear();
+
+                    errorMessage("");
                 }
 
 
@@ -231,14 +221,7 @@ namespace PeopleManagementSystem
             {
                 startOption("Searching");
 
-                // Check for people in system             
-                if (people.Count == 0)
-                {
-                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
-                    finishOption();
-
-                }
-                else
+                if (!isSystemEmpty())
                 {
 
                     bool searchFound = false;
@@ -281,8 +264,11 @@ namespace PeopleManagementSystem
                     }
                     //}
 
-                    
 
+                }
+                else
+                {
+                    errorMessage("");
                 }
 
 
@@ -299,7 +285,7 @@ namespace PeopleManagementSystem
 
                 //Console.WriteLine("Search");
 
-                finishOption();
+                
             }
             public void removeUsers()
             {
@@ -307,14 +293,7 @@ namespace PeopleManagementSystem
 
                 // Check for people in system
 
-                // Check for people in system             
-                if (people.Count == 0)
-                {
-                    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
-                    finishOption();
-
-                }
-                else
+                if (!isSystemEmpty())
                 {
 
                     // Output list of users
@@ -346,6 +325,11 @@ namespace PeopleManagementSystem
                     }
 
                 }
+                else
+                {
+
+                    errorMessage("");
+                }
             }
 
 
@@ -368,8 +352,14 @@ namespace PeopleManagementSystem
 
             public void errorMessage(string message)
             {
-                Console.WriteLine();
-                Console.WriteLine($"{message} Press <Enter> to try again.");
+                if (message == string.Empty)
+                {
+                    Console.WriteLine("Press <Enter> again to return to Menu.");
+                }
+                else
+                {
+                    Console.WriteLine($"\n{message} Press <Enter> to try again.");
+                }
 
                 Console.ReadLine();
                 Console.Clear();
