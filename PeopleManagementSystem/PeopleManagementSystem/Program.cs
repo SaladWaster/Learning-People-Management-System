@@ -24,8 +24,6 @@ namespace PeopleManagementSystem
             // Can be adjusted in the future as necessary
             public Person(string name, int age)
             {
-                // this refers to the class field "name" in the current instance of a class ( public string name )
-                // name is the constructor parameter
 
                 this.name = name;
                 this.age = age;
@@ -97,17 +95,6 @@ namespace PeopleManagementSystem
                 }
 
 
-
-
-
-                //Console.WriteLine("1. Print all users");
-                //Console.WriteLine("2. Add User");
-                //Console.WriteLine("3. Edit User");
-                //Console.WriteLine("4. Search User");
-                //Console.WriteLine("5. Remove User");
-                //Console.WriteLine("6. Exit App");
-
-
                 Console.Write("Enter an option: ");
 
                 bool tryParseMenu = int.TryParse(Console.ReadLine(), out int menuOption);   // Parsing the User Input as a Menu option
@@ -115,17 +102,12 @@ namespace PeopleManagementSystem
                 //if (tryParseMenu && menuOption > 0 && menuOption < 7)
                 if (tryParseMenu && menuOption > 0 && menuOption < menuOptions.Length + 1)
                 {
-                    //Console.WriteLine(menuOption);
 
                     if (menuOption == 1) { printUsers(); }
                     else if (menuOption == 2) { addUsers(); }
                     else if (menuOption == 3) { editUsers(); }
                     else if (menuOption == 4) { searchUsers(); }
                     else if (menuOption == 5) { removeUsers(); }
-
-
-                    //else if (menuOption == 6) { exit(); }
-
 
 
                     /* After the functions above finish executing, it will continue down the code and check if we selected the options above
@@ -142,7 +124,6 @@ namespace PeopleManagementSystem
                 }
                 else
                 {
-                    //Console.WriteLine("Invalid option; Press <Enter> to try again.");
                     errorMessage("Invalid option!");
                     printMenu();
                 }
@@ -151,7 +132,6 @@ namespace PeopleManagementSystem
 
             public void printUsers()
             {
-                //Console.WriteLine("Print");
 
                 startOption("Printing");
 
@@ -197,7 +177,7 @@ namespace PeopleManagementSystem
 
                 if (!isSystemEmpty())
                 {
-                    // Check if person in system AND Print all people
+
                     printAllUsers();
 
 
@@ -213,14 +193,12 @@ namespace PeopleManagementSystem
                     if (tryParseEdit && indexSelect >= 0 && indexSelect < people.Count)
                     {
 
-                        // edit user, print message
                         Person person = returnPerson(); // This will return either a successful person object or null
 
                         if (person != null)
                         {
-                            // edit list
-
-                            // instead of adding, we replace it directly at the corresponding index
+                            
+                            // we replace it directly at the corresponding index
                             people[indexSelect] = person;
 
 
@@ -261,8 +239,6 @@ namespace PeopleManagementSystem
                     bool searchFound = false;
 
 
-                    //while (!searchFound)
-                    //{
                     Console.Write("Enter a name: ");
                     string nameInput = (Console.ReadLine()).ToLower();
 
@@ -273,7 +249,6 @@ namespace PeopleManagementSystem
 
                         for (int i = 0; i < people.Count; i++)
                         {
-                            //if (people[i].name.ToLower() == nameInput.ToLower())
                             if (people[i].name.ToLower().Contains(nameInput))
                             {
                                 Console.WriteLine(people[i].returnDetails());
@@ -296,28 +271,13 @@ namespace PeopleManagementSystem
                         errorMessage("Invalid name input!");
                         searchUsers();
                     }
-                    //}
 
-
-                }
+                                    }
                 else
                 {
                     errorMessage("");
                 }
 
-
-                // Get Name input
-                // Validate Name input
-                // Maybe allow age Search as well ***
-                // Loop and check for name
-                // Output results
-
-
-                // Return back to menu (AFTER search ends)
-                // * Maybe enter Null if done searching? Or just press a Key (Y/N/F)
-
-
-                //Console.WriteLine("Search");
 
                 
             }
@@ -325,15 +285,11 @@ namespace PeopleManagementSystem
             {
                 startOption("Removing");
 
-                // Check for people in system
 
                 if (!isSystemEmpty())
                 {
-
-                    // Output list of users
                     printAllUsers();
 
-                    // allow selection
                     Console.Write("Enter an Index: ");
 
                     // validate selection                
@@ -344,8 +300,6 @@ namespace PeopleManagementSystem
 
                     if (tryParseRemove && indexSelect >= 0 && indexSelect < people.Count)
                     {
-
-                        // remove user, print message
                         people.RemoveAt(indexSelect);
                         Console.WriteLine("Successfully removed a person!");
 
@@ -361,7 +315,6 @@ namespace PeopleManagementSystem
                 }
                 else
                 {
-
                     errorMessage("");
                 }
             }
@@ -410,29 +363,15 @@ namespace PeopleManagementSystem
 
                 /* Removed people.Count validation as this will be implemented directly in function.
                  * We only run the other processes if the people count isnt 0 */
-
-                //if (people.Count == 0)
-                //{
-                //    Console.WriteLine("There are currently no users in the system. Create a user with option 1.");
-                //}
-                //else
-                //{
-                //    for (int i = 1; i < people.Count + 1; i++)
-                //    {
-                //        Console.WriteLine(i + ". " + people[i - 1].returnDetails());  // return details for each person in list
-                //    }
-                //}
+                               
             }
 
-            // we want to return a Person, not void
+
             public Person returnPerson()
             {
-                // Enter name
-
                 Console.Write("Enter a name: ");
                 string nameInput = Console.ReadLine();
 
-                // Enter age
                 Console.Write("Enter age: ");
 
                 bool tryParseAge = int.TryParse(Console.ReadLine(), out int ageInput);   // Parsing the Age Input
@@ -470,7 +409,6 @@ namespace PeopleManagementSystem
                 }
                 else
                 {
-
                     return false;
                 }
             }
@@ -481,14 +419,6 @@ namespace PeopleManagementSystem
 
         static void Main(string[] args)
         {
-            //Person person = new Person("Aba", 23);
-            //Console.WriteLine(person.returnDetails());
-
-            ////Console.WriteLine($"{person.name} - {person.age}");
-            //person.setName("Ab");
-            //person.setAge(20);
-            //Console.WriteLine(person.returnDetails());
-
             Manager manager = new Manager();    // A new instance of manager will automatically call printMenu(), as stated in the constructor
 
             Console.WriteLine("Press <Enter> Again to close the app. \n Goodbye! ");
