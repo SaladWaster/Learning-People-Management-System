@@ -66,7 +66,7 @@ namespace PeopleManagementSystem
                 // initialising list
                 people = new List<Person>()
                 {
-                    new Person("Aba", 23),
+                    new Person("Steve", 23),
                     new Person("Austin", 16)
                 };
 
@@ -76,19 +76,44 @@ namespace PeopleManagementSystem
 
             public void printMenu()
             {
+                // array of options
+                string[] menuOptions = new string[]
+                {
+                "Print all users",
+                "Add User",
+                "Edit User",
+                "Search User",
+                "Remove User",
+                "Exit App",
+                };
+
                 Console.WriteLine("Welcome to the management system!");
-                Console.WriteLine("1. Print all users");
-                Console.WriteLine("2. Add User");
-                Console.WriteLine("3. Edit User");
-                Console.WriteLine("4. Search User");
-                Console.WriteLine("5. Remove User");
-                Console.WriteLine("6. Exit App");
+
+
+                // arrays use Length (fixed)        - lists use Count (dynamic)
+                for (int i = 1; i <= menuOptions.Length; i++)
+                {
+                    Console.WriteLine(i + ". " + menuOptions[i-1]);
+                }
+
+
+
+
+
+                //Console.WriteLine("1. Print all users");
+                //Console.WriteLine("2. Add User");
+                //Console.WriteLine("3. Edit User");
+                //Console.WriteLine("4. Search User");
+                //Console.WriteLine("5. Remove User");
+                //Console.WriteLine("6. Exit App");
+
 
                 Console.Write("Enter an option: ");
 
                 bool tryParseMenu = int.TryParse(Console.ReadLine(), out int menuOption);   // Parsing the User Input as a Menu option
 
-                if (tryParseMenu && menuOption > 0 && menuOption < 7)
+                //if (tryParseMenu && menuOption > 0 && menuOption < 7)
+                if (tryParseMenu && menuOption > 0 && menuOption < menuOptions.Length + 1)
                 {
                     //Console.WriteLine(menuOption);
 
@@ -101,7 +126,16 @@ namespace PeopleManagementSystem
 
                     //else if (menuOption == 6) { exit(); }
 
-                    if (menuOption >=1 && menuOption <= 5) 
+
+
+                    /* After the functions above finish executing, it will continue down the code and check if we selected the options above
+                     * If we did select options 1-5 above, we will print the menu again (this whole function)
+                     * If not, it is either invalid or if exit (6) is selected, this printMenu() function will end
+                     * Then the app will close, as specified in the Main function after this printMenu() function ends
+                     */
+
+                    // if menu options are within the range of 1-5  (Length is 6, as our current array has 6 options)
+                    if (menuOption > 0 && menuOption < menuOptions.Length) 
                     {
                         printMenu();
                     }
@@ -374,7 +408,7 @@ namespace PeopleManagementSystem
                     Console.WriteLine(i + ". " + people[i - 1].returnDetails());  // return details for each person in list
                 }
 
-                /* Removed people. Count validation as this will be implemented directly in function.
+                /* Removed people.Count validation as this will be implemented directly in function.
                  * We only run the other processes if the people count isnt 0 */
 
                 //if (people.Count == 0)
